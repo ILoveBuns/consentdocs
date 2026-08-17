@@ -44,8 +44,10 @@ const banner = document.querySelector("#reason-banner");
 const message = document.querySelector("#action-message");
 const rationale = document.querySelector("#rationale");
 let selected = "complete";
+let currentAuditHash = null;
 
 function render(key) {
+  currentAuditHash = null;
   selected = key;
   const item = documents[key];
   title.textContent = item.title;
@@ -71,16 +73,33 @@ fieldList.addEventListener("click", (event) => {
   document.querySelectorAll(".paper [data-field]").forEach((entry) => entry.classList.toggle("active", entry.dataset.field === row.dataset.field));
 });
 
-function decide(decision) {
+async function decide(decision) {
   const text = rationale.value.trim();
   if (text.length < 8) {
     message.textContent = "Add a rationale of at least 8 characters before deciding.";
     message.style.color = "#b63a46";
     return;
   }
+  if (!currentAuditHash) {
+    message.style.color = "#69758b";
+    message.textContent = `${decision} previewed. Analyze a PDF through the local server to record a real audit event.`;
+    return;
+  }
+  const response = await fetch("/api/review", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ auditHash: currentAuditHash, decision: decision === "Approval" ? "approved" : "rejected", rationale: text }),
+  });
+  const result = await response.json();
+  if (!response.ok) {
+    message.style.color = "#b63a46";
+    message.textContent = result.error ?? "Review could not be recorded.";
+    return;
+  }
+  currentAuditHash = result.audit.eventHash;
   message.style.color = "#11875d";
-  message.textContent = `${decision} recorded in the tamper-evident audit chain for ${documents[selected].title}.`;
-  document.querySelector("#audit-hash").textContent = `${Math.random().toString(16).slice(2, 6)}…${Math.random().toString(16).slice(2, 6)}`;
+  message.textContent = `${decision} recorded in the tamper-evident audit chain.`;
+  document.querySelector("#audit-hash").textContent = `${currentAuditHash.slice(0, 4)}…${currentAuditHash.slice(-4)}`;
 }
 
 document.querySelector("#approve-button").addEventListener("click", () => decide("Approval"));
@@ -93,5 +112,39 @@ document.querySelector("#export-button").addEventListener("click", () => {
   link.click();
   URL.revokeObjectURL(link.href);
 });
+
+document.querySelector("#pdf-upload").addEventListener("change", async (event) => {
+  const file = event.target.files?.[0];
+  if (!file) return;
+  const uploadStatus = document.querySelector("#upload-status");
+  uploadStatus.textContent = "Sending to Nutrient DWS through the secure server…";
+  const form = new FormData();
+  form.append("file", file);
+  try {
+    const response = await fetch("/api/analyze", { method: "POST", body: form });
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.error ?? "Analysis failed");
+    currentAuditHash = result.audit.eventHash;
+    selected = "uploaded";
+    title.textContent = file.name;
+    const blocked = result.policy.decision !== "auto_eligible";
+    pill.textContent = result.policy.decision.replaceAll("_", " ").toUpperCase();
+    pill.classList.toggle("blocked", blocked);
+    banner.classList.toggle("blocked", blocked);
+    banner.innerHTML = `<span>${blocked ? "!" : "✓"}</span><div><strong>${blocked ? "Policy requires human review." : "All mandatory fields passed policy."}</strong><p>${result.policy.reasons.join(", ") || "Every accepted field has source evidence."}</p></div>`;
+    fieldList.innerHTML = result.fields.map((field) => `<button class="field-row" data-field="${field.name}"><span>${field.name.replaceAll("_", " ")}</span><span class="field-value">${field.value ?? "Missing"}</span><span class="confidence ${result.policy.fieldStatus[field.name] === "accepted" ? "" : "low"}">${field.confidence === null ? "—" : `${field.confidence.toFixed(2)} signal`}</span></button>`).join("");
+    document.querySelector("#audit-hash").textContent = `${currentAuditHash.slice(0, 4)}…${currentAuditHash.slice(-4)}`;
+    uploadStatus.textContent = `Real DWS request ${result.requestId}; source file was not persisted.`;
+  } catch (error) {
+    uploadStatus.textContent = error instanceof Error ? error.message : "Analysis failed";
+  }
+});
+
+fetch("/api/health")
+  .then((response) => response.ok ? response.json() : Promise.reject())
+  .then((health) => {
+    document.querySelector("#connection-status").innerHTML = `<i></i> ${health.keyConfigured ? "Nutrient DWS connected" : "Server running · key missing"}`;
+  })
+  .catch(() => {});
 
 render("complete");

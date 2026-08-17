@@ -13,3 +13,25 @@
 .field-row:hover {
   background: #f8f9fc;
 }
+
+.upload-button {
+  display: block;
+  margin-bottom: 8px;
+  padding: 11px 14px;
+  border: 1px dashed #91a0ee;
+  border-radius: 10px;
+  background: #f5f7ff;
+  color: var(--blue);
+  text-align: center;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.upload-status {
+  min-height: 16px;
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.4;
+}

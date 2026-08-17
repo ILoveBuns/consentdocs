@@ -11,6 +11,8 @@ API + Cloud + AI Hackathon 2026 window for the Nutrient DWS Challenge.
 - A three-document real API matrix proves complete consent is eligible while a
   missing withdrawal method and conflicting parties are blocked; see
   `evidence/RUN_002.md`.
+- A real server flow proves browser upload, DWS extraction, deterministic
+  routing, and a chained human decision; see `evidence/RUN_003.md`.
 - Nutrient DWS is the only document provider in the production adapter.
 - The API key is read server-side from `NUTRIENT_API_KEY` and never logged.
 - Missing, low-confidence, uncited, or malformed fields fail closed.
@@ -25,6 +27,7 @@ npm ci
 npm run check
 npm run fixture
 npm run demo
+npm start
 ```
 
 To execute the real DWS integration after setting the key in your private

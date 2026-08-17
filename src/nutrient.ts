@@ -71,11 +71,19 @@ export async function extractConsentFields(
   filePath: string,
   options: { apiKey?: string; fetchImpl?: typeof fetch } = {},
 ): Promise<NutrientBuildResponse> {
+  return extractConsentDocument(await readFile(filePath), basename(filePath), options);
+}
+
+export async function extractConsentDocument(
+  bytes: Uint8Array,
+  fileName: string,
+  options: { apiKey?: string; fetchImpl?: typeof fetch } = {},
+): Promise<NutrientBuildResponse> {
   const apiKey = options.apiKey ?? requireApiKey();
   const fetchImpl = options.fetchImpl ?? fetch;
-  const bytes = await readFile(filePath);
   const form = new FormData();
-  form.append("file", new Blob([bytes], { type: "application/pdf" }), basename(filePath));
+  const upload = new Uint8Array(bytes).buffer as ArrayBuffer;
+  form.append("file", new Blob([upload], { type: "application/pdf" }), basename(fileName));
   form.append("instructions", JSON.stringify({
     schema: consentSchema,
     parseConfig: { mode: "understand" },

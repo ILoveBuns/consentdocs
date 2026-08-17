@@ -14,4 +14,11 @@ describe("review console", () => {
     expect(html).toContain("SYNTHETIC · NO REAL PII");
     expect(html).not.toMatch(/gmail\.com|qq\.com|hotmail\.com/);
   });
+
+  it("does not fabricate audit hashes in the static demo", async () => {
+    const script = await readFile("web/app.js", "utf8");
+    expect(script).not.toContain("Math.random");
+    expect(script).toContain("/api/analyze");
+    expect(script).toContain("/api/review");
+  });
 });

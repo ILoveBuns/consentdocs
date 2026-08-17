@@ -1,0 +1,17 @@
+{
+  "provider": "nutrient-dws",
+  "requestId": "GMyns8cW-_n3F4QAAE8S",
+  "scenario": "missing-withdrawal",
+  "providerStatus": 200,
+  "policyDecision": "needs_review",
+  "fieldStatus": {
+    "party_name": "accepted",
+    "effective_date": "accepted",
+    "withdrawal_method": "missing",
+    "contact_email": "accepted"
+  },
+  "initialAuditHash": "dd718c298364e195acd22285eaa3e2c4ebec31eae91975729b95382e522c76c7",
+  "humanDecision": "approved",
+  "reviewAuditHash": "07886c7fd1971f4fab2055607acd686d0381a90b44f290dd61258fa8e989a124",
+  "reviewPreviousHashMatches": true
+}

@@ -15,7 +15,7 @@
         <span>ConsentDocs</span>
       </a>
       <div class="topbar-actions">
-        <span class="live-dot"><i></i> Nutrient DWS connected</span>
+        <span class="live-dot" id="connection-status"><i></i> Verified DWS evidence</span>
         <button class="ghost-button" id="export-button">Export audit</button>
       </div>
     </header>
@@ -43,6 +43,9 @@
       <section class="workspace">
         <aside class="queue-panel">
           <div class="panel-heading"><div><p class="eyebrow">DOCUMENTS</p><h2>Review queue</h2></div><span class="count">3</span></div>
+          <label class="upload-button" for="pdf-upload">Analyze a PDF</label>
+          <input id="pdf-upload" type="file" accept="application/pdf" hidden />
+          <p class="upload-status" id="upload-status"></p>
           <button class="document-card active" data-document="complete">
             <span class="file-icon">PDF</span><span><strong>complete-consent.pdf</strong><small>4 fields · 1 page</small></span><em class="status review">Review</em>
           </button>
