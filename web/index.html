@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="ConsentDocs deterministic document review console" />
+    <title>ConsentDocs — Review Console</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="ConsentDocs home">
+        <span class="brand-mark">CD</span>
+        <span>ConsentDocs</span>
+      </a>
+      <div class="topbar-actions">
+        <span class="live-dot"><i></i> Nutrient DWS connected</span>
+        <button class="ghost-button" id="export-button">Export audit</button>
+      </div>
+    </header>
+    <main>
+      <section class="hero">
+        <div>
+          <p class="eyebrow">REVIEW QUEUE / SYNTHETIC DEMO</p>
+          <h1>Trust the evidence.<br />Escalate the uncertainty.</h1>
+          <p class="hero-copy">Every extracted value stays tied to its source. Deterministic policy decides what can move forward and what needs a human.</p>
+        </div>
+        <div class="hero-score">
+          <span class="score-label">Workflow integrity</span>
+          <strong>100%</strong>
+          <span>Audit chain verified</span>
+        </div>
+      </section>
+
+      <section class="metrics" aria-label="Workflow metrics">
+        <article><span>Queue</span><strong>03</strong><small>2 require review</small></article>
+        <article><span>Auto-eligible</span><strong>01</strong><small>All fields grounded</small></article>
+        <article><span>Review rate</span><strong>67%</strong><small>Fail-closed policy</small></article>
+        <article><span>DWS credits</span><strong>5,000</strong><small>Free plan available</small></article>
+      </section>
+
+      <section class="workspace">
+        <aside class="queue-panel">
+          <div class="panel-heading"><div><p class="eyebrow">DOCUMENTS</p><h2>Review queue</h2></div><span class="count">3</span></div>
+          <button class="document-card active" data-document="complete">
+            <span class="file-icon">PDF</span><span><strong>complete-consent.pdf</strong><small>4 fields · 1 page</small></span><em class="status review">Review</em>
+          </button>
+          <button class="document-card" data-document="missing">
+            <span class="file-icon">PDF</span><span><strong>missing-withdrawal.pdf</strong><small>3 fields · 1 page</small></span><em class="status blocked">Blocked</em>
+          </button>
+          <button class="document-card" data-document="conflict">
+            <span class="file-icon">PDF</span><span><strong>conflicting-party.pdf</strong><small>4 fields · 2 sources</small></span><em class="status blocked">Blocked</em>
+          </button>
+        </aside>
+
+        <section class="review-panel">
+          <div class="panel-heading review-heading">
+            <div><p class="eyebrow">DETERMINISTIC DECISION</p><h2 id="document-title">complete-consent.pdf</h2></div>
+            <span class="decision-pill" id="decision-pill">AUTO-ELIGIBLE</span>
+          </div>
+          <div class="reason-banner" id="reason-banner">
+            <span>✓</span><div><strong>All mandatory fields passed policy.</strong><p>Human confirmation remains available before release.</p></div>
+          </div>
+          <div class="field-list" id="field-list"></div>
+          <div class="review-actions">
+            <label for="rationale">Reviewer rationale</label>
+            <textarea id="rationale" placeholder="Explain the evidence behind your decision (required)…"></textarea>
+            <div class="button-row">
+              <button class="danger-button" id="reject-button">Reject</button>
+              <button class="primary-button" id="approve-button">Approve with audit trail</button>
+            </div>
+            <p class="action-message" id="action-message" role="status"></p>
+          </div>
+        </section>
+
+        <aside class="evidence-panel">
+          <div class="panel-heading"><div><p class="eyebrow">SOURCE EVIDENCE</p><h2>Document view</h2></div><span class="verified">VERIFIED</span></div>
+          <div class="paper" id="paper">
+            <p class="paper-kicker">SYNTHETIC DATA PROCESSING</p><h3>Consent Agreement</h3>
+            <p>This agreement records consent for a synthetic product demonstration.</p>
+            <p class="highlight" data-field="party_name"><b>Party name</b><br />Example Research Cooperative</p>
+            <p class="highlight" data-field="effective_date"><b>Effective date</b><br />2026-08-17</p>
+            <p class="highlight" data-field="withdrawal_method"><b>Withdrawal method</b><br />Email withdraw@example.test</p>
+            <p class="highlight" data-field="contact_email"><b>Contact email</b><br />compliance@example.test</p>
+            <div class="paper-stamp">SYNTHETIC · NO REAL PII</div>
+          </div>
+          <div class="audit-chain"><span>SHA-256 chain</span><code id="audit-hash">9f2d…a611</code><i>Valid</i></div>
+        </aside>
+      </section>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>
