@@ -1,0 +1,18 @@
+{
+  "provider": "nutrient-dws",
+  "operation": "extraction-extract-consent-v1",
+  "status": 200,
+  "requestId": "GMynHQyY1XrEbX0AACEi",
+  "inputSha256": "7a2a54cb205e6f8b37fd1c23dbc52c1afea979a187e3bbc55e31db3f50bb51b7",
+  "fieldStatus": {
+    "party_name": "accepted",
+    "effective_date": "accepted",
+    "withdrawal_method": "accepted",
+    "contact_email": "accepted"
+  },
+  "decision": "auto_eligible",
+  "resultHash": "7269da3e0d40010d4c85534cd5cfcc956e7cd65b39b4389f4e4c7b32dccd27a0",
+  "auditHash": "5edea348f3012f2de8773620d188879454f262cf31329f3ef0b522bdf4e6abaa",
+  "auditChainValid": true,
+  "completedAt": "2026-08-17T17:14:58.641Z"
+}

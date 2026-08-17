@@ -19,6 +19,20 @@ describe("normalizeDwsFields", () => {
     expect(fields.find((field) => field.name === "effective_date")?.citations).toHaveLength(1);
   });
 
+  it("normalizes schema-shaped extract output with citation metadata", () => {
+    const fields = normalizeDwsFields({
+      output: {
+        data: { party_name: "Example Cooperative", effective_date: "2026-08-17" },
+        metadata: {
+          party_name: { confidence: 0.93, match: "id_match", pageNumber: 1, bbox: { x: 10, y: 20, width: 30, height: 40 } },
+          effective_date: { confidence: 0.8, match: "fuzzy_match", pageNumber: 1, bbox: { x: 50, y: 60, width: 70, height: 80 } },
+        },
+      },
+    });
+    expect(fields.find((field) => field.name === "party_name")).toMatchObject({ value: "Example Cooperative", confidence: 0.93 });
+    expect(fields.find((field) => field.name === "effective_date")?.citations[0]?.label).toBe("fuzzy_match");
+  });
+
   it("fails closed for absent fields", () => {
     const fields = normalizeDwsFields({ pages: [] });
     expect(fields).toHaveLength(4);

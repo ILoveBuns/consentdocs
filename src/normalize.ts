@@ -48,6 +48,31 @@ function candidateElements(response: unknown): Record<string, unknown>[] {
 }
 
 export function normalizeDwsFields(response: unknown): ExtractedField[] {
+  const root = object(response);
+  const output = object(root?.output);
+  const data = object(output?.data);
+  const metadata = object(output?.metadata);
+  if (data) {
+    return fieldNames.map((name) => {
+      const citation = object(metadata?.[name]);
+      const bbox = object(citation?.bbox);
+      const bounds = bbox
+        ? [bbox.x, bbox.y, bbox.width, bbox.height].map(finiteNumber)
+        : [];
+      const hasBounds = bounds.length === 4 && bounds.every((entry): entry is number => entry !== null);
+      const page = finiteNumber(citation?.pageNumber);
+      const match = typeof citation?.match === "string" ? citation.match : "not_found";
+      const rawValue = data[name];
+      return {
+        name,
+        value: typeof rawValue === "string" ? rawValue.trim() : null,
+        confidence: finiteNumber(citation?.confidence),
+        citations: page !== null && hasBounds && match !== "not_found"
+          ? [{ page, bounds: bounds as [number, number, number, number], label: match }]
+          : [],
+      };
+    });
+  }
   const candidates = candidateElements(response);
   return fieldNames.map((name) => {
     const matches = candidates

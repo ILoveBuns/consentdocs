@@ -5,10 +5,10 @@ const documents = {
     message: "All mandatory fields passed policy.",
     detail: "Human confirmation remains available before release.",
     fields: [
-      ["Party name", "Example Research Cooperative", "99%", "party_name"],
-      ["Effective date", "2026-08-17", "99%", "effective_date"],
-      ["Withdrawal method", "withdraw@example.test", "98%", "withdrawal_method"],
-      ["Contact email", "compliance@example.test", "99%", "contact_email"],
+      ["Party name", "Example Research Cooperative", "0.99", "party_name"],
+      ["Effective date", "2026-08-17", "0.99", "effective_date"],
+      ["Withdrawal method", "withdraw@example.test", "0.98", "withdrawal_method"],
+      ["Contact email", "compliance@example.test", "0.99", "contact_email"],
     ],
   },
   missing: {
@@ -17,10 +17,10 @@ const documents = {
     message: "Required withdrawal method is missing.",
     detail: "Consent cannot move downstream without an explicit human decision.",
     fields: [
-      ["Party name", "Example Research Cooperative", "97%", "party_name"],
-      ["Effective date", "2026-08-17", "98%", "effective_date"],
+      ["Party name", "Example Research Cooperative", "0.97", "party_name"],
+      ["Effective date", "2026-08-17", "0.98", "effective_date"],
       ["Withdrawal method", "Missing", "—", "withdrawal_method"],
-      ["Contact email", "compliance@example.test", "96%", "contact_email"],
+      ["Contact email", "compliance@example.test", "0.96", "contact_email"],
     ],
   },
   conflict: {
@@ -29,10 +29,10 @@ const documents = {
     message: "Party names conflict across two source regions.",
     detail: "The policy preserves both citations and refuses to guess.",
     fields: [
-      ["Party name", "2 conflicting values", "72%", "party_name"],
-      ["Effective date", "2026-08-17", "98%", "effective_date"],
-      ["Withdrawal method", "withdraw@example.test", "97%", "withdrawal_method"],
-      ["Contact email", "compliance@example.test", "98%", "contact_email"],
+      ["Party name", "2 conflicting values", "0.72", "party_name"],
+      ["Effective date", "2026-08-17", "0.98", "effective_date"],
+      ["Withdrawal method", "withdraw@example.test", "0.97", "withdrawal_method"],
+      ["Contact email", "compliance@example.test", "0.98", "contact_email"],
     ],
   },
 };
@@ -57,7 +57,7 @@ function render(key) {
   fieldList.innerHTML = item.fields.map(([label, value, confidence, field]) => `
     <button class="field-row" data-field="${field}">
       <span>${label}</span><span class="field-value">${value}</span>
-      <span class="confidence ${confidence === "—" || Number.parseInt(confidence) < 85 ? "low" : ""}">${confidence}</span>
+      <span class="confidence ${confidence === "—" || Number.parseFloat(confidence) < 0.85 ? "low" : ""}">${confidence === "—" ? confidence : `${confidence} signal`}</span>
     </button>`).join("");
   document.querySelectorAll(".document-card").forEach((card) => card.classList.toggle("active", card.dataset.document === key));
   message.textContent = "";
