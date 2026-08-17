@@ -1,0 +1,6 @@
+node_modules/
+dist/
+.env
+*.private.json
+fixtures/*.pdf
+!fixtures/README.md
