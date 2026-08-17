@@ -102,3 +102,14 @@ export function normalizeDwsFields(response: unknown): ExtractedField[] {
     };
   });
 }
+
+export function detectPartyConflict(response: unknown): boolean {
+  const root = object(response);
+  const output = object(root?.output);
+  const data = object(output?.data);
+  const party = typeof data?.party_name === "string" ? data.party_name.trim().toLocaleLowerCase() : "";
+  const signatureParty = typeof data?.signature_party_name === "string"
+    ? data.signature_party_name.trim().toLocaleLowerCase()
+    : "";
+  return party !== "" && signatureParty !== "" && party !== signatureParty;
+}

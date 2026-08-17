@@ -25,6 +25,9 @@ export interface ExtractionEnvelope {
   provider: "nutrient-dws" | "fixture";
   providerRequestId: string | null;
   fields: readonly ExtractedField[];
+  signals?: {
+    partyConflict: boolean;
+  };
 }
 
 export type Decision = "auto_eligible" | "needs_review" | "rejected";

@@ -11,11 +11,11 @@ const consentSchema = {
   type: "object",
   properties: {
     party_name: { type: "string", description: "Full legal or organizational name of the party granting consent" },
+    signature_party_name: { type: "string", description: "Name of the party shown in the signature or execution section" },
     effective_date: { type: "string", description: "Effective date in YYYY-MM-DD format" },
     withdrawal_method: { type: "string", description: "Explicit method the party can use to withdraw consent" },
     contact_email: { type: "string", description: "Email address for consent or privacy questions" },
   },
-  required: ["party_name", "effective_date", "withdrawal_method", "contact_email"],
 } as const;
 
 export function requireApiKey(environment: NodeJS.ProcessEnv = process.env): string {
@@ -80,7 +80,7 @@ export async function extractConsentFields(
     schema: consentSchema,
     parseConfig: { mode: "understand" },
     options: { includeCitations: true },
-    instructions: "Extract only values explicitly present in the document. Never infer or invent missing consent terms.",
+    instructions: "Extract only values explicitly present in the document. Keep the agreement party and signature party separate. Never infer or invent missing consent terms.",
   }));
   const response = await fetchImpl("https://api.nutrient.io/extraction/extract", {
     method: "POST",

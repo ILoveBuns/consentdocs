@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { normalizeDwsFields } from "../src/normalize.js";
+import { detectPartyConflict, normalizeDwsFields } from "../src/normalize.js";
 
 describe("normalizeDwsFields", () => {
   it("normalizes source-grounded key-value pairs", () => {
@@ -50,5 +50,16 @@ describe("normalizeDwsFields", () => {
       { label: "Party name", value: "High", confidence: 0.97, page: 1, bounds: [5, 6, 7, 8] },
     ] }] });
     expect(fields.find((field) => field.name === "party_name")?.value).toBe("High");
+  });
+
+  it("detects agreement and signature party disagreement", () => {
+    expect(detectPartyConflict({ output: { data: {
+      party_name: "Example Research Cooperative",
+      signature_party_name: "Different Example Holdings",
+    } } })).toBe(true);
+    expect(detectPartyConflict({ output: { data: {
+      party_name: "Example Research Cooperative",
+      signature_party_name: "Example Research Cooperative",
+    } } })).toBe(false);
   });
 });

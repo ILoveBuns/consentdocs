@@ -24,6 +24,10 @@ export function evaluateConsent(
   const reasons = fieldNames
     .filter((name) => fieldStatus[name] !== "accepted")
     .map((name) => `${name}:${fieldStatus[name]}`);
+  if (extraction.signals?.partyConflict) {
+    fieldStatus.party_name = "invalid";
+    if (!reasons.includes("party_name:conflict")) reasons.push("party_name:conflict");
+  }
   const decision: PolicyResult["decision"] = reasons.length === 0 ? "auto_eligible" : "needs_review";
   const stableResult = { decision, fieldStatus, reasons };
   return { ...stableResult, resultHash: hashCanonical(stableResult) };

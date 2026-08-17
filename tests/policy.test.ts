@@ -53,4 +53,11 @@ describe("evaluateConsent", () => {
     const second = { ...first, providerRequestId: "different" };
     expect(evaluateConsent(first).resultHash).toBe(evaluateConsent(second).resultHash);
   });
+
+  it("blocks a deterministic party conflict signal", () => {
+    const result = evaluateConsent({ ...extraction(), signals: { partyConflict: true } });
+    expect(result.decision).toBe("needs_review");
+    expect(result.reasons).toContain("party_name:conflict");
+    expect(result.fieldStatus.party_name).toBe("invalid");
+  });
 });

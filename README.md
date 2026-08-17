@@ -8,6 +8,9 @@ API + Cloud + AI Hackathon 2026 window for the Nutrient DWS Challenge.
 
 - A real Nutrient DWS `/extraction/extract` call completed with HTTP `200` on
   the synthetic fixture; see `evidence/RUN_001.md`.
+- A three-document real API matrix proves complete consent is eligible while a
+  missing withdrawal method and conflicting parties are blocked; see
+  `evidence/RUN_002.md`.
 - Nutrient DWS is the only document provider in the production adapter.
 - The API key is read server-side from `NUTRIENT_API_KEY` and never logged.
 - Missing, low-confidence, uncited, or malformed fields fail closed.
@@ -31,6 +34,6 @@ environment:
 NUTRIENT_API_KEY=... npm run dws:run -- fixtures/complete-consent.pdf
 ```
 
-The command writes only `evidence/dws-extract.public.json`, a sanitized public
-receipt. It does not persist the API key, source document text, or raw provider
-response.
+The command writes only a sanitized receipt under `evidence/`, named after the
+input fixture. It does not persist the API key, source document text, or raw
+provider response.
