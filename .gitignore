@@ -5,3 +5,8 @@ secrets/
 *.private.json
 fixtures/*.pdf
 !fixtures/README.md
+video/frames/
+video/qc/
+video/frames.txt
+video/*.wav
+video/*.mp4

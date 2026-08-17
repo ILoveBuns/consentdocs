@@ -1,0 +1,15 @@
+Most document AI demos stop after returning plausible text. That is not enough for consent, where a missing withdrawal method or a mismatch between the agreement and signature can invalidate the workflow.
+
+ConsentDocs uses Nutrient Document Web Services for source-grounded facts, deterministic policy for routing, and humans for exceptions.
+
+This is the review console. The complete synthetic consent has four mandatory business fields. Nutrient extracted each value with citation metadata. ConsentDocs verifies presence, format, grounding, and the confidence signal, then returns auto eligible. Clicking a field connects the structured value to the source area. The signal is shown as an uncalibrated signal, not misleadingly as a probability.
+
+Now consider the missing-withdrawal document. The document never says how consent can be withdrawn. Nutrient does not invent the field. Local policy marks withdrawal method as missing and blocks automation. A reviewer must add an explicit rationale before approving or rejecting the exception. That decision becomes a new event whose previous hash matches the extraction event.
+
+The conflicting-party case exposed our most important engineering lesson. Our first real schema requested one generic party name. The extraction selected one source, so local policy could not see the disagreement and incorrectly allowed the document. We fixed the architecture by extracting the agreement party and signature party separately. Deterministic local logic now compares them and routes the mismatch to review. The model extracts facts; it never gets final decision authority.
+
+The server accepts one PDF up to ten megabytes, keeps it in memory, and sends it to the real Nutrient extraction endpoint. The long-lived API key remains server-side. Uploaded documents and raw provider responses are never written to disk. Authorization headers and request bodies are redacted from logs.
+
+Three public real-call receipts prove the complete, missing, and conflicting scenarios. Each call returned HTTP two hundred, consumed fifteen Data Extraction credits, and produced a verified audit hash. The upload-to-review test also proves a real provider request followed by a linked human decision.
+
+ConsentDocs turns Nutrient's citation-rich extraction into a workflow people can trust: automate the clear cases, escalate the uncertainty, and preserve every decision.

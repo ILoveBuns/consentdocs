@@ -43,13 +43,39 @@ const pill = document.querySelector("#decision-pill");
 const banner = document.querySelector("#reason-banner");
 const message = document.querySelector("#action-message");
 const rationale = document.querySelector("#rationale");
+const paper = document.querySelector("#paper");
+const examplePaper = paper.innerHTML;
 let selected = "complete";
 let currentAuditHash = null;
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function renderCitationSummary(fields) {
+  paper.innerHTML = `
+    <p class="paper-kicker">NUTRIENT DWS EXTRACTION</p><h3>Citation Summary</h3>
+    <p>Values below came from the uploaded PDF. The original file was processed in memory and was not persisted by ConsentDocs.</p>
+    ${fields.map((field) => {
+      const citation = field.citations?.[0];
+      const source = citation
+        ? `Page ${citation.pageNumber ?? citation.page ?? "—"}${citation.text ? ` · “${escapeHtml(citation.text)}”` : ""}`
+        : "No source citation returned";
+      return `<p class="highlight" data-field="${escapeHtml(field.name)}"><b>${escapeHtml(field.name.replaceAll("_", " "))}</b><br />${escapeHtml(field.value ?? "Missing")}<br /><small>${source}</small></p>`;
+    }).join("")}
+    <div class="paper-stamp">REAL DWS RESULT · FILE NOT STORED</div>`;
+}
 
 function render(key) {
   currentAuditHash = null;
   selected = key;
   const item = documents[key];
+  paper.innerHTML = examplePaper;
   title.textContent = item.title;
   pill.textContent = item.decision;
   const blocked = item.decision !== "AUTO-ELIGIBLE";
@@ -133,6 +159,7 @@ document.querySelector("#pdf-upload").addEventListener("change", async (event) =
     banner.classList.toggle("blocked", blocked);
     banner.innerHTML = `<span>${blocked ? "!" : "✓"}</span><div><strong>${blocked ? "Policy requires human review." : "All mandatory fields passed policy."}</strong><p>${result.policy.reasons.join(", ") || "Every accepted field has source evidence."}</p></div>`;
     fieldList.innerHTML = result.fields.map((field) => `<button class="field-row" data-field="${field.name}"><span>${field.name.replaceAll("_", " ")}</span><span class="field-value">${field.value ?? "Missing"}</span><span class="confidence ${result.policy.fieldStatus[field.name] === "accepted" ? "" : "low"}">${field.confidence === null ? "—" : `${field.confidence.toFixed(2)} signal`}</span></button>`).join("");
+    renderCitationSummary(result.fields);
     document.querySelector("#audit-hash").textContent = `${currentAuditHash.slice(0, 4)}…${currentAuditHash.slice(-4)}`;
     uploadStatus.textContent = `Real DWS request ${result.requestId}; source file was not persisted.`;
   } catch (error) {
