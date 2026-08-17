@@ -40,3 +40,8 @@ NUTRIENT_API_KEY=... npm run dws:run -- fixtures/complete-consent.pdf
 The command writes only a sanitized receipt under `evidence/`, named after the
 input fixture. It does not persist the API key, source document text, or raw
 provider response.
+
+## Submission materials
+
+- `SUBMISSION_DRAFT.md` — complete Devpost narrative.
+- `DEMO_SCRIPT.md` — timed 2–4 minute walkthrough.
