@@ -4,6 +4,10 @@ ConsentDocs turns consent-heavy documents into deterministic, reviewable, and
 audit-ready decisions. It is being built from scratch during the DevNetwork
 API + Cloud + AI Hackathon 2026 window for the Nutrient DWS Challenge.
 
+Nutrient DWS performs the core PDF-to-structured-evidence operation, including
+field-level citations. Without that grounded response, ConsentDocs deliberately
+refuses to issue a workflow decision.
+
 ## Current evidence
 
 - A real Nutrient DWS `/extraction/extract` call completed with HTTP `200` on
@@ -45,3 +49,12 @@ provider response.
 
 - `SUBMISSION_DRAFT.md` — complete Devpost narrative.
 - `DEMO_SCRIPT.md` — timed 2–4 minute walkthrough.
+
+## Product path
+
+The first deployable form is a per-document API plus a reviewer workspace for
+privacy, legal, and onboarding teams. Organizations retain their deterministic
+approval rules while DWS supplies cited evidence; new document categories are
+added as policy packs instead of requiring model retraining. The current public
+build is a hackathon demonstration, not a claim of production customers,
+revenue, or measured labor savings.

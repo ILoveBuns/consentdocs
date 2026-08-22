@@ -38,6 +38,10 @@ business decision until that DWS response exists. The application then uses
 the returned grounding evidence to make deterministic routing decisions and
 show reviewers exactly where each fact came from.
 
+**Submission-form version:** Nutrient DWS performs the core PDF-to-structured-
+evidence operation, including field-level citations; without that grounded
+response, ConsentDocs deliberately refuses to issue a workflow decision.
+
 ## How we built it
 
 - TypeScript and Fastify backend with an in-memory, 10 MiB-limited PDF upload.
@@ -79,6 +83,22 @@ local deterministic logic. The repeated real run correctly changed from
   and green CI.
 - API key remains server-side and never enters the browser, logs, repository,
   or public evidence.
+
+## Feasibility and business path
+
+ConsentDocs is designed as a narrow workflow layer rather than another general
+document model. A regulated team can keep its existing approval policy, use DWS
+to turn incoming PDFs into cited evidence, and automate only the cases that
+meet that policy. The remaining cases arrive in one review queue with the
+missing or conflicting evidence already identified.
+
+The initial product path is a per-document API and reviewer workspace for
+privacy, legal, and onboarding teams. Expansion does not require retraining a
+model: teams add deterministic policy packs for their document type while the
+same DWS extraction, citation, review, and audit pipeline remains in place.
+This makes a pilot feasible with synthetic or approved documents first, then a
+controlled rollout beside an existing manual process. No customer, revenue, or
+time-savings claim is made without production evidence.
 
 ## What is next
 
