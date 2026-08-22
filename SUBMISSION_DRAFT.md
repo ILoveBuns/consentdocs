@@ -73,6 +73,15 @@ the agreement party and signature party separately, then compare them with
 local deterministic logic. The repeated real run correctly changed from
 `auto_eligible` to `needs_review`.
 
+## What we learned
+
+Grounding is not the same as policy. DWS can faithfully return the evidence it
+was asked to find, but the schema must expose every fact the business rule needs
+to compare. Separating the agreement party from the signature party made that
+boundary explicit. We also learned to keep provider request metadata out of the
+canonical business hash: the same evidence should produce the same policy
+result even when request IDs and timestamps change.
+
 ## Accomplishments
 
 - Real Nutrient DWS integration completed within minutes of the competition
