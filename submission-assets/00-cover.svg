@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f8f9fc"/>
+      <stop offset="1" stop-color="#eef1ff"/>
+    </linearGradient>
+    <linearGradient id="mark" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#263ed8"/>
+      <stop offset="1" stop-color="#6276ff"/>
+    </linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#24345d" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="630" fill="url(#background)"/>
+  <circle cx="1080" cy="80" r="210" fill="#3f5bf6" opacity="0.06"/>
+  <circle cx="1050" cy="600" r="260" fill="#23b77f" opacity="0.06"/>
+
+  <g transform="translate(82 74)">
+    <rect width="70" height="70" rx="20" fill="url(#mark)"/>
+    <text x="35" y="44" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="23" font-weight="700" letter-spacing="1">CD</text>
+    <text x="92" y="47" fill="#17213a" font-family="Arial, sans-serif" font-size="35" font-weight="700">ConsentDocs</text>
+  </g>
+
+  <g transform="translate(82 205)">
+    <text fill="#17213a" font-family="Arial, sans-serif" font-size="62" font-weight="750">
+      <tspan x="0" y="0">Trust the evidence.</tspan>
+      <tspan x="0" y="75">Escalate the uncertainty.</tspan>
+    </text>
+    <text x="2" y="132" fill="#69758b" font-family="Arial, sans-serif" font-size="23">
+      Source-grounded document decisions powered by Nutrient DWS.
+    </text>
+  </g>
+
+  <g transform="translate(82 474)" font-family="Arial, sans-serif">
+    <g>
+      <rect width="270" height="82" rx="16" fill="#ffffff" stroke="#dfe5ee"/>
+      <circle cx="35" cy="41" r="12" fill="#23b77f"/>
+      <text x="60" y="36" fill="#17213a" font-size="18" font-weight="700">Cited extraction</text>
+      <text x="60" y="59" fill="#69758b" font-size="14">Nutrient DWS evidence</text>
+    </g>
+    <g transform="translate(292)">
+      <rect width="270" height="82" rx="16" fill="#ffffff" stroke="#dfe5ee"/>
+      <circle cx="35" cy="41" r="12" fill="#3f5bf6"/>
+      <text x="60" y="36" fill="#17213a" font-size="18" font-weight="700">Deterministic policy</text>
+      <text x="60" y="59" fill="#69758b" font-size="14">Fail closed on uncertainty</text>
+    </g>
+    <g transform="translate(584)">
+      <rect width="270" height="82" rx="16" fill="#ffffff" stroke="#dfe5ee"/>
+      <circle cx="35" cy="41" r="12" fill="#b63a46"/>
+      <text x="60" y="36" fill="#17213a" font-size="18" font-weight="700">Human review</text>
+      <text x="60" y="59" fill="#69758b" font-size="14">SHA-256 audit chain</text>
+    </g>
+  </g>
+
+  <g transform="translate(965 202)" filter="url(#shadow)">
+    <rect width="170" height="190" rx="24" fill="#ffffff" stroke="#dfe5ee"/>
+    <text x="28" y="46" fill="#69758b" font-family="Arial, sans-serif" font-size="13" font-weight="700" letter-spacing="1.5">WORKFLOW</text>
+    <text x="28" y="66" fill="#69758b" font-family="Arial, sans-serif" font-size="13" font-weight="700" letter-spacing="1.5">INTEGRITY</text>
+    <text x="28" y="124" fill="#17213a" font-family="Georgia, serif" font-size="48" font-weight="700">100%</text>
+    <text x="28" y="157" fill="#11875d" font-family="Arial, sans-serif" font-size="14" font-weight="700">Audit verified</text>
+  </g>
+</svg>

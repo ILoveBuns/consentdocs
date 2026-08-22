@@ -41,13 +41,14 @@ If the form asks where Nutrient DWS does the real work, use:
 
 Upload the 2:58.97 demo video first, then add the screenshots in this order:
 
-1. `submission-assets/01-source-grounded-fields.jpg`
-2. `submission-assets/02-missing-evidence-review.jpg`
-3. `submission-assets/03-conflict-detection.jpg`
-4. `submission-assets/04-live-dws-citations.jpg`
-5. `submission-assets/05-real-dws-evidence.jpg`
+1. `submission-assets/00-cover.png`
+2. `submission-assets/01-source-grounded-fields.jpg`
+3. `submission-assets/02-missing-evidence-review.jpg`
+4. `submission-assets/03-conflict-detection.jpg`
+5. `submission-assets/04-live-dws-citations.jpg`
+6. `submission-assets/05-real-dws-evidence.jpg`
 
-Suggested captions:
+Suggested captions (the cover does not need one):
 
 1. **Grounded fields:** Complete consent passes only when every required field
    has cited evidence.
