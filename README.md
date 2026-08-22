@@ -49,6 +49,9 @@ provider response.
 
 - `SUBMISSION_DRAFT.md` — complete Devpost narrative.
 - `DEMO_SCRIPT.md` — timed 2–4 minute walkthrough.
+- `submission-assets/` — five 1920×1080 Devpost-ready screenshots covering
+  grounded extraction, missing evidence, conflicting evidence, the live DWS
+  path, and the public real-run receipt.
 
 ## Product path
 
